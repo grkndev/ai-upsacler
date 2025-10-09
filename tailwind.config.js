@@ -1,0 +1,20 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  // NOTE: Update this to include the paths to all files that contain Nativewind classes.
+  content: ["./app/**/*.tsx", "./components/**/*.{js,jsx,ts,tsx}"],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Montserrat_400Regular", "system-ui", "sans-serif"],
+        "sans-normal": ["Montserrat_400Regular"],
+        "sans-medium": ["Montserrat_500Medium"],
+        "sans-semibold": ["Montserrat_600SemiBold"],
+        "sans-bold": ["Montserrat_700Bold"],
+        "sans-extrabold": ["Montserrat_800ExtraBold"],
+        "sans-black": ["Montserrat_900Black"],
+      },  
+    },
+  },
+  plugins: [],
+};
