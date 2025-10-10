@@ -32,15 +32,17 @@ export default function RootLayout() {
 
   return (
     <Stack
+    
       screenOptions={{
-        headerShown: false,
-
+       // header: (props) => <Header {...props} />,
+headerShown: false,
         contentStyle: {
           backgroundColor: "#0C081E",
         },
       }}
     >
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(screens)/NewScaleScreen" />
     </Stack>
   );
 }
