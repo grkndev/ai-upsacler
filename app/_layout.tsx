@@ -1,4 +1,7 @@
 import "@/global.css";
+import "react-native-gesture-handler";
+import "react-native-reanimated";
+
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
@@ -10,6 +13,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -31,18 +35,19 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack
-    
-      screenOptions={{
-       // header: (props) => <Header {...props} />,
-headerShown: false,
-        contentStyle: {
-          backgroundColor: "#0C081E",
-        },
-      }}
-    >
-      <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="(screens)/NewScaleScreen" />
-    </Stack>
+    <GestureHandlerRootView>
+      <Stack
+        screenOptions={{
+          // header: (props) => <Header {...props} />,
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#0C081E",
+          },
+        }}
+      >
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(screens)/NewScaleScreen" />
+      </Stack>
+    </GestureHandlerRootView>
   );
 }
