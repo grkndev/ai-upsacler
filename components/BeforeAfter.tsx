@@ -21,7 +21,13 @@ const clamp = (value: number, lowerBound: number, upperBound: number) => {
   return Math.min(Math.max(value, lowerBound), upperBound);
 };
 
-const BeforeAfterSlider = () => {
+const BeforeAfterSlider = ({
+  before,
+  after,
+}: {
+  before: string;
+  after: string;
+}) => {
   const { width: windowWidth } = useWindowDimensions();
 
   const containerWidth = useSharedValue(windowWidth);
@@ -30,13 +36,16 @@ const BeforeAfterSlider = () => {
   const sliderPosition = useSharedValue(windowWidth * sliderRatio.value);
   const panOffset = useSharedValue(sliderPosition.value);
 
-  const handleLayout = React.useCallback(({ nativeEvent }: LayoutChangeEvent) => {
-    const { width, height } = nativeEvent.layout;
-    containerWidth.value = width;
-    containerHeight.value = height;
-    const nextPosition = width * sliderRatio.value;
-    sliderPosition.value = clamp(nextPosition, 0, width);
-  }, []);
+  const handleLayout = React.useCallback(
+    ({ nativeEvent }: LayoutChangeEvent) => {
+      const { width, height } = nativeEvent.layout;
+      containerWidth.value = width;
+      containerHeight.value = height;
+      const nextPosition = width * sliderRatio.value;
+      sliderPosition.value = clamp(nextPosition, 0, width);
+    },
+    []
+  );
 
   React.useEffect(() => {
     const nextWidth = windowWidth;

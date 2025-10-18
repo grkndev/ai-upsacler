@@ -2,11 +2,13 @@ import BeforeAfterSlider from "@/components/BeforeAfter";
 import Header from "@/components/ui/header";
 import Icons from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
+import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 // ActivityIndicator, yükleme animasyonu için eklendi
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Text,
   TouchableOpacity,
@@ -25,6 +27,31 @@ export default function NewScaleScreen() {
   const [isLoading, setIsLoading] = React.useState(false);
   // 'isComplated' -> 'isCompleted' olarak düzeltildi
   const [isCompleted, setIsCompleted] = React.useState(false);
+  const [baseImage, setBaseImage] = React.useState<string>();
+  const [scaledImage, setScaledImage] = React.useState<string>();
+
+  const pickImage = async () => {
+    let res = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+    });
+
+    console.log(res);
+    if (!res.canceled) {
+      setBaseImage(res.assets[0].uri);
+    }
+    if (res.canceled) {
+      Alert.alert("You have to select an image", "Please pick a image", [
+        {
+          text: "Open gallery",
+          onPress: pickImage,
+        },
+      ]);
+    }
+  };
+
+  React.useEffect(() => {
+    pickImage();
+  }, []);
 
   // Ölçekleme işlemini başlatan fonksiyon
   function handleScale() {
@@ -63,11 +90,11 @@ export default function NewScaleScreen() {
           (Eski 'aspect-[10/15.5]' kaldırıldı)
         */}
         <View className="w-full flex-1 rounded-3xl overflow-hidden">
-          {isCompleted ? (
-            <BeforeAfterSlider />
+          {isCompleted && baseImage && scaledImage ? (
+            <BeforeAfterSlider before={baseImage} after={scaledImage} />
           ) : (
             <Image
-              source={require("@/assets/images/photo1.png")}
+              source={{ uri: baseImage }}
               // 'stretch' yerine 'cover' kullanıldı (Daha iyi görüntü)
               resizeMode="cover"
               className="w-full h-full"
