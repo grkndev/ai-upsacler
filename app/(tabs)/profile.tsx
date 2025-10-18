@@ -7,7 +7,7 @@ export default function ProfileScreen() {
   return (
     <>
       <Header title="Profile" />
-      <View>
+      <View className="flex-1">
         <BeforeAfter />
       </View>
     </>
